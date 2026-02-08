@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Visual Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Mulish:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  /* --- 1. RESET & BASE --- */
+  :root {
+    --text-dark: #1a1a1a;
+    --text-light: #666;
+    --bg-color: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg-color);
+    font-family: 'Mulish', sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* --- 2. HEADER (INTRO) - ĐÃ SỬA --- */
+  header {
+    height: 100vh; /* Tăng chiều cao lên một chút cho hoành tráng */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    color: #ffffff; /* Đổi màu chữ chính sang trắng */
+
+    /* --- PHẦN QUAN TRỌNG NHẤT: ẢNH NỀN --- */
+    /* Cú pháp này gồm 2 lớp: 
+       Lớp 1: linear-gradient(...) là lớp phủ màu đen mờ 40% để làm tối ảnh đi một chút, giúp đọc chữ dễ hơn.
+       Lớp 2: url(...) là đường dẫn đến ảnh của bạn.
+    */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('background.png');
+    background-size: cover; /* Đảm bảo ảnh phủ kín header */
+    background-position: center; /* Căn giữa ảnh */
+    background-attachment: fixed; /* Hiệu ứng Parallax nhẹ: ảnh đứng yên khi cuộn trang (tuỳ chọn, rất đẹp trên PC) */
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem; /* Tăng kích thước chữ lên chút nữa */
+    font-weight: 300;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    color: #ffffff; /* Đảm bảo màu trắng */
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Thêm bóng đổ nhẹ cho chữ nổi bật */
+    animation: fadeDown 1.5s ease-out;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8); /* Màu trắng hơi mờ */
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    animation: fadeUp 1.5s ease-out;
+  }
+
+  header p {
+     color: rgba(255, 255, 255, 0.7);
+     font-style: italic;
+     margin-top: 20px;
+  }
+
+  /* --- 3. TIMELINE LAYOUT --- */
+/* --- 3. TIMELINE LAYOUT (ĐÃ SỬA) --- */
+  .story-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    /* SỬA: Giảm padding trên xuống 0 hoặc 20px (cũ là 100px) */
+    padding-top: 80px; 
+    padding-bottom: 100px;
+  }
+
+  .story-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Giữ nguyên khoảng cách xa giữa các ảnh để thoáng */
+    margin: 100px 0; 
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+  }
+
+  /* --- THÊM MỚI ĐOẠN NÀY --- */
+  /* Code này giúp ảnh đầu tiên cách Header chỉ 60px thay vì 180px */
+  .story-block:first-child {
+    margin-top: 60px; 
+  }
+
+  .story-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .story-text {
+    width: 40%; /* Tăng độ rộng phần chữ lên một chút */
+    padding: 0 40px;
+  }
+
+  .story-date {
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #999;
+    display: block;
+    margin-bottom: 15px;
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    display: inline-block;
+  }
+
+  .story-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .story-desc {
+    font-size: 1rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ĐÃ SỬA KÍCH THƯỚC ẢNH NHỎ LẠI THEO YÊU CẦU TRƯỚC */
+  .story-image {
+    width: 45%;       /* Giảm chiều rộng */
+    height: 450px;    /* Chiều cao cố định vừa phải */
+    object-fit: cover;
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.05);
+    border-radius: 4px; /* Bo góc nhẹ cho mềm mại */
+  }
+
+  /* --- 4. ĐẢO CHIỀU (ZIGZAG) --- */
+  .story-block:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  .story-block:nth-child(even) .story-text {
+    text-align: right;
+  }
+
+  /* --- 5. RESPONSIVE MOBILE --- */
+  @media screen and (max-width: 768px) {
+    header { height: 70vh; background-attachment: scroll; } /* Mobile không dùng fixed background */
+    h1 { font-size: 3rem; }
+    
+    .story-block {
+      flex-direction: column !important;
+      margin: 100px 20px;
+    }
+
+    .story-image {
+      width: 100%; /* Full màn hình trên mobile */
+      height: 350px; 
+      margin-bottom: 30px;
+    }
+
+    .story-text {
+      width: 100%;
+      padding: 0;
+      text-align: left !important;
+    }
+  }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="subtitle">The Visual Diary</div>
+  <h1>Những Khoảnh Khắc<br>Vô Tận</h1>
+  <p>Cuộn xuống để khám phá</p>
+</header>
+
+<div class="story-container" id="timeline-list">
+  </div>
+
+<script>
+  // DỮ LIỆU MẪU (Bạn có thể thay đổi ảnh ở đây sau)
+  const memories = [
+    {
+      date: '2024-02-14',
+      title: 'Mùa đông trên cao nguyên',
+      image: 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-1920-1080/hinh-nen-1920-1080-thumbnail.jpg',
+      desc: 'Cái lạnh cắt da thịt của tháng 12 không ngăn được chúng tôi đi tìm những bông hoa dã quỳ cuối cùng còn sót lại.'
+    },
+    {
+      date: '2023-08-05',
+      title: 'Thành phố lúc 5 giờ sáng',
+      image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1000&auto=format&fit=crop',
+      desc: 'Bình minh lên, những toà nhà chọc trời phản chiếu ánh nắng vàng rực rỡ. Một ngày mới lại bắt đầu với bao nhiêu hy vọng.'
+    },
+    {
+      date: '2022-11-20',
+      title: 'Góc quán quen',
+      image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1000&auto=format&fit=crop',
+      desc: 'Vẫn là chiếc bàn đó, ly cà phê đó, nhưng câu chuyện của chúng ta đã khác đi rất nhiều sau những năm tháng trưởng thành.'
+    }
+  ];
+
+  const container = document.getElementById('timeline-list');
+
+  // 1. Render HTML
+  memories.forEach(item => {
+    const html = `
+      <div class="story-block">
+        <img class="story-image" src="${item.image}" alt="${item.title}">
+        <div class="story-text">
+          <span class="story-date">${item.date}</span>
+          <h2 class="story-title">${item.title}</h2>
+          <p class="story-desc">${item.desc}</p>
+        </div>
+      </div>
+    `;
+    container.innerHTML += html;
+  });
+
+  // 2. TẠO HIỆU ỨNG CUỘN CHUỘT
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.story-block').forEach(el => observer.observe(el));
+
+</script>
+
+</body>
+</html> 
