@@ -187,7 +187,7 @@
 
 <header>
   <div class="subtitle">The Visual Diary</div>
-  <h1>Những Khoảnh Khắc<br>Vô Tận</h1>
+  <h1>Moments of Daily Life</h1>
   <p>Cuộn xuống để khám phá</p>
 </header>
 
@@ -214,18 +214,38 @@
       title: 'Góc quán quen',
       image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1000&auto=format&fit=crop',
       desc: 'Vẫn là chiếc bàn đó, ly cà phê đó, nhưng câu chuyện của chúng ta đã khác đi rất nhiều sau những năm tháng trưởng thành.'
+    },
+    {
+      date: '2023-11-20',
+      title: 'Test',
+      image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=1000&auto=format&fit=crop',
+      desc: 'Vẫn là chiếc bàn đó, ly cà phê đó, nhưng câu chuyện của chúng ta đã khác đi rất nhiều sau những năm tháng trưởng thành.'
     }
-  ];
 
+  ];
+  memories.sort((a, b) => new Date(a.date) - new Date(b.date));
+  /* ------------------------------------------------ */
+
+  //const container = document.getElementById('timeline-list');
   const container = document.getElementById('timeline-list');
 
   // 1. Render HTML
+// --- TÌM ĐOẠN NÀY VÀ THAY THẾ TOÀN BỘ ---
   memories.forEach(item => {
+    
+    // BƯỚC 1: Xử lý ngày tháng
+    // Tách chuỗi '2023-05-20' thành 3 phần
+    const parts = item.date.split('-'); 
+    // Ghép lại theo thứ tự: Ngày / Tháng / Năm
+    const displayDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+
+    // BƯỚC 2: Tạo HTML (Chú ý chỗ ${displayDate})
     const html = `
       <div class="story-block">
         <img class="story-image" src="${item.image}" alt="${item.title}">
         <div class="story-text">
-          <span class="story-date">${item.date}</span>
+          <span class="story-date">${displayDate}</span>
+          
           <h2 class="story-title">${item.title}</h2>
           <p class="story-desc">${item.desc}</p>
         </div>
