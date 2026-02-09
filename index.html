@@ -53,7 +53,18 @@
     background-position: center; /* Căn giữa ảnh */
     background-attachment: fixed; /* Hiệu ứng Parallax nhẹ: ảnh đứng yên khi cuộn trang (tuỳ chọn, rất đẹp trên PC) */
   }
-
+  /* --- 2. CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI --- */
+  @media (max-width: 768px) {
+    header {
+      /* --- ẢNH CHO ĐIỆN THOẠI (Ảnh Dọc) --- */
+      /* Thay link ảnh điện thoại vào dưới đây */
+      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('unname.JPG');
+      
+      /* Trên điện thoại nên tắt hiệu ứng 'fixed' để tránh bị giật hoặc lỗi zoom */
+      background-attachment: scroll; 
+      background-position: center top; /* Căn ảnh từ trên xuống */
+    }
+  }
   h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 4.5rem; /* Tăng kích thước chữ lên chút nữa */
