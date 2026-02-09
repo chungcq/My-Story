@@ -56,14 +56,14 @@
   /* --- 2. CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI --- */
   @media (max-width: 768px) {
     header {
+      height: 100dvh;
       /* --- ẢNH CHO ĐIỆN THOẠI (Ảnh Dọc) --- */
       /* Thay link ảnh điện thoại vào dưới đây */
       background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('anhnen.jpg');
       
       /* Trên điện thoại nên tắt hiệu ứng 'fixed' để tránh bị giật hoặc lỗi zoom */
       background-attachment: scroll; 
-      background-position: center top;
-      height: 100vh; /* Căn ảnh từ trên xuống */
+      background-position: center top; /* Căn ảnh từ trên xuống */
     }
   }
   h1 {
