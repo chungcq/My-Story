@@ -24,7 +24,12 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  
   body {
+    height: 100%;       /* Ép toàn bộ trang phải cao ít nhất 100% */
+    width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: var(--bg-color);
     font-family: 'Mulish', sans-serif;
     color: var(--text-dark);
@@ -33,7 +38,11 @@
 
   /* --- 2. HEADER (INTRO) - ĐÃ SỬA --- */
   header {
-    height: 100vh; /* Tăng chiều cao lên một chút cho hoành tráng */
+    height: 100vh;                       /* Lớp 1: Cho máy tính/Android cũ */
+    height: 100dvh;                      /* Lớp 2: Cho Android mới/Chrome */
+    min-height: -webkit-fill-available;  /* Lớp 3: Độc quyền sửa lỗi hụt chân trên iPhone */
+    
+    width: 100%;/* Tăng chiều cao lên một chút cho hoành tráng */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +65,7 @@
   /* --- 2. CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI --- */
   @media (max-width: 768px) {
     header {
-      height: 100dvh;
+      /* height: 100dvh; */
       /* --- ẢNH CHO ĐIỆN THOẠI (Ảnh Dọc) --- */
       /* Thay link ảnh điện thoại vào dưới đây */
       background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('anhnen.jpg');
